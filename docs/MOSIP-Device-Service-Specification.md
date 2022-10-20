@@ -229,9 +229,7 @@ The validity of the chip certificate can not exceed 20 years from the date of ma
 
 ### Device
 
-SBI devices are most often used to collect biometrics. The devices are expected to follow the specification for all level of compliance and their usage. The SBI devices fall under the category of Trust Level 3 (TL3) as defined in SBI architecture. At TL3 device is expected to be whitelisted with a fully capable PKI and secure storage of keys at the hardware.
-
-[TBD] Reference to MOSIP Architecture??
+SBI devices are most often used to collect biometrics. The devices are expected to follow the specification for all level of compliance and their usage. The SBI devices have a Trust Level where the device is expected to be whitelisted with a fully capable PKI and secure storage of keys at the hardware.
 
 * L0 - A device can obtain L0 certification when it uses a software level cryptographic library with no secure boot or FTM. These devices will follow different device identity and the same would be mentioned as part of exception flows.
 * L1 - A device can obtain L1 certification when it is built in a secure facility with one of the certified FTM.
