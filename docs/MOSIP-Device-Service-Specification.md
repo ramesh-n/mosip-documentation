@@ -124,7 +124,7 @@ EMC compliance | FCC Class A or equivalent | FCC Class A or equivalent
 Operation Temperature\*	| 0 to 50 &deg;C | 0 to 50 &deg;C
 FTM	| SBI 1.0 - Use host based security (and above) | SBI 2.0 - FTM supported security
 
-Notes:
+**Notes:**
 
 * *\* Adopters can change this if needed.*
 * *Capture Time across modalities should be less than 4 Seconds (time taken for providing a final capture response to the calling application, when the biometrics are well placed on the sensors)*
@@ -183,9 +183,9 @@ The FTM should have at least one of the following certifications in each categor
 
 * CAVP (RSA, AES, SHA256, TRNG (DRBGVS), ECC)
 
-{% hint style="info" %}
-The supported algorithm and curves are listed [here](MOSIP-Device-Service-Specification.md#cryptography)
-{% endhint %}
+**Note:** 
+
+The supported algorithm and curves are listed <a href="#cryptography">here</a>.
 
 
 **Category: FTM Chip**
@@ -223,9 +223,9 @@ The FTM should protect against the following threats.
 
 Upon an FTM provider approved by the adopters, the FTM provider would submit a self-signed public certificate to a trusted registry. Let us call this the FTM root. The adopter would use this certificate to seed their device trust database. The FTM root and their key pairs should be generated and stored in FIPS 140-2 Level 3 or more compliant devices with no possible mechanism to extract the keys. The foundational module upon its first boot is expected to generate a random asymmetric key pair and provide the public part of the key to obtain a valid certificate. The FTM provider would validate to ensure that the chip is unique and would issue a certificate with the issuer set to an FTM certificate chain. The entire certificate issuance would be in a secured provisioning facility. Auditable upon notice by the adopters or its approved auditors. The certificate issued to the module will have a defined validity period as per the application certificate policy document defined by the application adopters. This certificate and private key within the FTM chip is expected to be in its permanent memory.
 
-{% hint style="info" %}
+**Note:**
+
 The validity of the chip certificate can not exceed 20 years from the date of manufacturing.
-{% endhint %}
 
 ### Device
 
@@ -287,9 +287,9 @@ Unsigned digital ID would look as follows:
 
 Payload is the Digital ID JSON object.
 
-{% hint style="info" %}
+**Note:** 
+
 For an L0 unregistered device, the digital id will be unsigned. In all other scenarios, except for a discovery call, the digital ID will be signed either by the chip key (L1) or the device key (L0).
-{% endhint %}
 
 [TBD] update links below by adding sections
 
@@ -343,9 +343,9 @@ Device discovery would be used to identify SBI compliant devices in a system by 
 
 * type - "Biometric Device", "Finger", "Face", "Iris"
 
-{% hint style="info" %}
+**Note:**
+
 "Biometric Device" - is a special type and used in case if you are looking for any biometric device.
-{% endhint %}
 
 #### Device Discovery Response
 
@@ -385,15 +385,16 @@ Device discovery would be used to identify SBI compliant devices in a system by 
 | deviceCode      | Same as serialNo in digital ID.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | specVersion     | Array of supported SBI specification version. The array element zero will always contain the spec version using which the response is created.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | purpose         | Purpose of the device in the SBI ecosystem. Allowed values are "Auth" or "Registration".                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| error           | Relevant errors as defined under the [error section](MOSIP-Device-Service-Specification.md#error-codes) of this document.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| error.errorCode | Standardized error code defined in the [error code section](MOSIP-Device-Service-Specification.md#error-codes).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| error           | Relevant errors as defined under the <a href="#error-codes">error section</a> of this document.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| error.errorCode | Standardized error code defined in the <a href="#error-codes">error code section</a>.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | error.errorInfo | Description of the error that can be displayed to end user. Multi lingual support.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
-{% hint style="info" %}
+**Notes:**
+
 * The response is an array that we could have a single device enumerating with multiple biometric options.
 * The service should ensure to respond only if the type parameter matches the type of device or the type parameter is a "Biometric Device".
 * This response is a direct JSON as shown in the response.
-{% endhint %}
+
 
 #### Windows/Linux
 
@@ -420,13 +421,13 @@ Content-Type: application/json
 Connection: Closed
 ```
 
-{% hint style="info" %}
+**Notes:**
+
 * The payloads are JSON in both cases and are part of the body.
 * CallbackId would be set to the `http://127.0.0.1:<device_service_port>/`. So, the caller will use the respective HTTP verb/method and the URL to call the service.
-{% endhint %}
 
 #### Android
-For details on android specifications please view the section - [Android SBI Specification](#android-sbi-specification).
+For details on android specifications please view the section - <a href="#android-sbi-specification">Android SBI Specification</a>.
 
 <!--
 All devices on an android device should listen to the following intent "io.sbi.device".
@@ -524,14 +525,15 @@ So the API would respond in the following format.
 | deviceInfo.env            | <ul><li>The target enviornment.</li><li>For devices that are not registered the enviornment is "None".</li><li>For device that is registered, then send the enviornment in which it is registered.</li><li>Allowed values are "Staging", "Developer", "Pre-Production" or "Production".</li></ul>                                                                                                                                                                                                                                                                                                 |
 | deviceInfo.purpose        | <ul><li>The purpose of the device in the SBI ecosystem.</li><li>For devices that are not registered the purpose is empty.</li><li>Allowed values are "Auth" or "Registration".</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                        |
 | deviceInfo.specVersion    | Array of supported SBI specification version. The array element Zero will always contain the spec version using which the response is created.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| error                     | Relevant errors as defined under the [error section](MOSIP-Device-Service-Specification.md#error-codes) of this document.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| error.errorCode           | Standardized error code defined in the [error code section](MOSIP-Device-Service-Specification.md#error-codes).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| error                     | Relevant errors as defined under the <a href="#error-codes">error section</a> of this document.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| error.errorCode           | Standardized error code defined in the <a href="#error-codes">error code section</a>.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | error.errorInfo           | Description of the error that can be displayed to end user. Multi lingual support.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
-{% hint style="info" %}
+**Notes:**
+
 * The response is an array that we could have a single device enumerating with multiple biometric options.
 * The service should ensure to respond only if the type parameter matches the type of device or the type parameter is a "Biometric Device".
-{% endhint %}
+
 
 #### Windows/Linux
 
@@ -556,12 +558,12 @@ Content-Type: application/json
 Connection: Closed
 ```
 
-{% hint style="info" %}
+**Note:**
+
 The payloads are JSON in both cases and are part of the body.
-{% endhint %}
 
 #### Android
-For details on android specifications please view the section - [Android SBI Specification](#android-sbi-specification).
+For details on android specifications please view the section - <a href="#android-sbi-specification">Android SBI Specification</a>.
 
 <!--
 An android device should listen to the following intent "appId.Info".
@@ -615,9 +617,9 @@ The capture request would be used to capture a biometric from SBI compliant devi
 }
 ```
 
-{% hint style="info" %}
+**Note:**
+
 Count value should be driven by the count of the bioSubType for Iris and Finger. For Face, there will be no bioSubType but the count should be "1".
-{% endhint %}
 
 #### Allowed Values for Capture Request
 
@@ -730,8 +732,8 @@ NFIQ v1.0 on a scale of 0-100 (quality score).
 | hash                      | sha256 in hex format in upper case (previous "hash" + sha256 hash of the current biometric ISO data before encryption)                                                                                                                                                                                                                                                                 |
 | sessionKey                | The session key (used for the encryption of the biodata (ISO)) is encrypted using the Application public certificate with RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING algorithm and then encode the encrypted session key with base64 URL safe encoding.                                                                                                                                           |
 | thumbprint                | SHA256 representation of the certificate (HEX encoded) that was used for encryption of session key. All texts to be treated as uppercase without any spaces or hyphens.                                                                                                                                                                                                                |
-| error                     | Relevant errors as defined under the [error section](MOSIP-Device-Service-Specification.md#error-codes) of this document.                                                                                                                                                                                                                                                              |
-| error.errorCode           | Standardized error code defined in the [error code section](MOSIP-Device-Service-Specification.md#error-codes).                                                                                                                                                                                                                                                                        |
+| error                     | Relevant errors as defined under the <a href="#error-codes">error section</a> of this document.                                                                                                                                                                                                                                                              |
+| error.errorCode           | Standardized error code defined in the <a href="#error-codes">error code section</a>.                                                                                                                                                                                                                                                                        |
 | error.errorInfo           | Description of the error that can be displayed to the end-user. Multi-lingual support.                                                                                                                                                                                                                                                                                                 |
 
 The entire data object is sent in JWT format. So, the data object will look like this:
@@ -764,12 +766,12 @@ Content-Type: application/json
 Connection: Closed
 ```
 
-{% hint style="info" %}
+**Note:**
+
 The payloads are JSON in both cases and are part of the body.
-{% endhint %}
 
 #### Android
-For details on android specifications please view the section - [Android SBI Specification](#android-sbi-specification).
+For details on android specifications please view the section - <a href="#android-sbi-specification">Android SBI Specification</a>.
 
 <!--
 All device on an android device should listen to the following intent appid.capture. Upon this intend, the devices are expected to respond with the JSON response filtered by the respective type.
@@ -811,11 +813,11 @@ Used only for the registration module compatible devices. This API is visible on
 
 #### Device Stream Response
 
-Live Video stream with quality of 3 frames per second or more using [M-JPEG](https://en.wikipedia.org/wiki/Motion\_JPEG).
+Live Video stream with quality of 3 frames per second or more using <a href="https://en.wikipedia.org/wiki/Motion\_JPEG">M-JPEG</a>.
 
-{% hint style="info" %}
+**Note:** 
+
 The preview should have quality markings and segment marking. The preview would also be used to display an error message to the user screen. All error messages should be localized.
-{% endhint %}
 
 #### Error Response for Device Stream
 
@@ -843,7 +845,7 @@ EXT: <app name>
 _**HTTP Response:**_ HTTP Chunk of frames to be displayed. Minimum frames 3 per second.
 
 #### Android
-For details on android specifications please view the section - [Android SBI Specification](#android-sbi-specification).
+For details on android specifications please view the section - <a href="#android-sbi-specification">Android SBI Specification</a>.
 
 <!--
 No support for streaming
@@ -889,9 +891,9 @@ The API is used by the devices that are compatible with the registration module.
 }
 ```
 
-{% hint style="info" %}
+**Note:**
+
 To capture the exception photo exception value for Iris or Finger should be sent in bio.exception for bio.type = 'Face'. ICAO checks are not mandatory here but one face must be present within the frame.
-{% endhint %}
 
 #### Accepted Values for Registration Capture Request
 
@@ -984,8 +986,8 @@ To capture the exception photo exception value for Iris or Finger should be sent
 | data.requestedScore       | Floating point number to represent the minimum required score for the capture.                                                                                                                                                                                                                                              |
 | data.qualityScore         | Floating point number representing the score for the current capture.                                                                                                                                                                                                                                                       |
 | hash                      | sha256 in hex format in upper case (previous "hash" + sha256 hash of the current biometric ISO data).                                                                                                                                                                                                                       |
-| error                     | Relevant errors as defined under the [error section](MOSIP-Device-Service-Specification.md#error-codes) of this document.                                                                                                                                                                                                   |
-| error.errorCode           | Standardized error code defined in the [error code section](MOSIP-Device-Service-Specification.md#error-codes).                                                                                                                                                                                                             |
+| error                     | Relevant errors as defined under the <a href="#error-codes">error section</a> of this document.                                                                                                                                                                                                   |
+| error.errorCode           | Standardized error code defined in the <a href="#error-codes">error code section</a>.                                                                                                                                                                                                             |
 | error.errorInfo           | Description of the error that can be displayed to end user. Multi lingual support.                                                                                                                                                                                                                                          |
 
 #### Windows/Linux
@@ -1003,7 +1005,7 @@ EXT: <app name>
 _**HTTP Response:**_ HTTP response.
 
 #### Android
-For details on android specifications please view the section - [Android SBI Specification](#android-sbi-specification).
+For details on android specifications please view the section - <a href="#android-sbi-specification">Android SBI Specification</a>.
 
 <!--
 No support for Registration Capture
@@ -1095,9 +1097,10 @@ The management server has the following objectives.
 6. Safe storage of keys using HSM FIPS 140-2 Level 3. These keys are used to issue the device certificate upon registration. The Management Server is created and hosted by the device provider outside of application software. The communication protocols between the SBI and the Management Server can be decided by the respective device provider. Such communication should be restricted to the above-specified interactions only. No transactional information should be sent to this server.
 7. Should have the ability to push updates from the server to the client devices.
 
-{% hint style="info" %}
+**Notes:**
+
 _As there is no adopter specific information being exchanged at the management server or the FTM provisioning server, there are no mandates from SBI where these are located globally. However, the adopter is recommended to have an audit and contractual mechanisms to validate the compliance of these components at any point in time._
-{% endhint %}
+
 
 ### Management Client
 
@@ -1106,7 +1109,7 @@ Management client is the interface that connects the device with the respective 
 1. For better and efficient handling of the device at large volume, we expect the devices to auto-register to the Management Server.
 2. All communication to the server and from the server should follow the below properties.
    1. All communication is digitally signed with the approved algorithms
-   2. All communication to the server are encrypted using one of the approved public key cryptography (HTTPS – TLS1.2/1.3 is required with one of the [approved algorithms](#cryptography).
+   2. All communication to the server are encrypted using one of the approved public key cryptography (HTTPS – TLS1.2/1.3 is required with one of the <a href="#cryptography">approved algorithms</a>.
    3. All request has timestamps attached in ISO format to the milliseconds inside the signature.
    4. All communication back and forth should have the signed digital id as one of the attributes.
 3. It's expected that auto-registration has an absolute way to identify and validate the devices.
@@ -1136,9 +1139,10 @@ Secure provisioning applies to both the FTM and the Device providers.
 5. All key creations need for provisioning should happen automatically using FIPS 140-2 Level 3 or higher devices. No individual or a group or organization should have a mechanism to influence this behaviour.
 6. Before the devices/FTM leaving the secure provisioning facility all the necessary trust should be established and should not be re-programmable.
 
-{% hint style="info" %}
+**Note:**
+
 * As there is no adopter specific information being exchanged at the management server or the FTM provisioning server, there are no mandates from applications where these are located globally. However, the adopter is recommended to have an audit and contractual mechanisms to validate the compliance of these components at any point in time.\*
-{% endhint %}
+
 
 ### Compliance Level
 
@@ -1165,9 +1169,9 @@ Supported algorithms:
 | Secure Boot                                | RSA             | >=256    | FTM trusted memory                                   |
 | Secure Boot                                | ECC curve 25519 | >=256    | FTM trusted memory                                   |
 
-{% hint style="info" %}
+**Note:**
+
 No other ECC curves supported.
-{% endhint %}
 
 ## Signature
 
